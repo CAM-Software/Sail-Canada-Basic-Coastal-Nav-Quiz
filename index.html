@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+div#test{ border:#000 1px solid; padding:10px 40px 40px 40px; }
+</style>
+<script src="jquery.min.js"></script>
+<script src="qbank"></script>
+<script>
+var pos = 0, test, test_status, question, choice, choices, correct = 0, swapper, ranVal, corAnswer;
+var numbofquest;    // Number of questions
+
+numbofquest = questions.length;
+
+// Randomize the list of questions
+
+for (var i = 0; i < numbofquest; i++ ) {
+   randVal = Math.floor(Math.random() * numbofquest);
+   if (randVal != i ) {
+      for (var j = 0; j < 5; j++) {
+         console.log(i, j, randVal);
+         console.log(questions[i][j]);
+         swapper = questions[i][j];
+         questions[i][j] = questions[randVal][j];
+         questions[randVal][j] = swapper;
+      }
+   }
+}
+
+function _(x){
+	return document.getElementById(x);
+}
+
+function renderQuestion(){
+	test = _("test");
+	if(pos >= questions.length){
+		test.innerHTML = "<h2>You got "+correct+" of "+questions.length+" questions correct</h2>";
+		_("test_status").innerHTML = "Test Completed";
+		pos = 0;
+		correct = 0;
+		return false;
+	}
+	_("test_status").innerHTML = "Question "+(pos+1)+" of "+questions.length+" current score : "+correct+" of "+pos;
+	question = questions[pos][0];
+        // Now we randomize the answers
+        corAnswer = 1;
+        for (var i = 1; i <= 4; i++ ) {
+          randVal = Math.floor(Math.random() * 4) + 1;
+          if (randVal != i ) {
+             swapper = questions[pos][i];
+             questions[pos][i] = questions[pos][randVal];
+             questions[pos][randVal] = swapper;
+             if (randVal == corAnswer ) {
+                corAnswer = i; } else {
+                   if ( i == corAnswer ) {
+                      corAnswer = randVal;
+                   }
+             }
+          }
+        }
+        console.log(corAnswer);
+	test.innerHTML = "<h3>"+question+"</h3>";
+        for (var i = 1; i <= 4; i++ ) {
+           if ( questions[pos][i].substr(0, 7) != "images/" ) {
+              test.innerHTML += "<input type='radio' name='choices' value="+i+"> "+questions[pos][i]+"<br>";
+           } else {
+              test.innerHTML += "<input type='radio' name='choices' value="+i+"> "+"<img src="+questions[pos][i]+">"+"<br>";
+           }
+        }
+	test.innerHTML += "<br><button onclick='checkAnswer()'>Submit Answer</button>";
+}
+
+function checkAnswer(){
+	choices = document.getElementsByName("choices");
+	for(var i=0; i<choices.length; i++){
+		if(choices[i].checked){
+			choice = choices[i].value;
+		}
+	}
+	if(choice == corAnswer){
+		correct++;
+           test.innerHTML = "<h3>Correct</h3>";
+           test.innerHTML +="<p>For the question:<br>"
+           test.innerHTML += "<h3>"+question+"</h3>";
+           test.innerHTML +="<p>The answer is:<br>"
+           if ( questions[pos][corAnswer].substr(0, 7) != "images/" ) {
+              test.innerHTML += "<p> "+questions[pos][corAnswer]+"<br>";
+           } else {
+              test.innerHTML += "<img src="+questions[pos][corAnswer]+">"+"<br>";
+           }
+           pos++;
+           test.innerHTML += "<br><button onclick='renderQuestion()'>Continue</button>";
+	} else {
+           test.innerHTML = "<h3>Incorrect</h3>";
+           test.innerHTML +="<p>For the question:</p><br>"
+           test.innerHTML += "<h3>"+question+"</h3>";
+           test.innerHTML +="<p>The answer is:</p><br>"
+           if ( questions[pos][corAnswer].substr(0, 7) != "images/" ) {
+              test.innerHTML += "<p>"+questions[pos][corAnswer]+"</p><br>";
+           } else {
+              test.innerHTML += "<img src="+questions[pos][corAnswer]+">"+"<br>";
+           }
+           pos++;
+           test.innerHTML += "<br><button onclick='renderQuestion()'>Continue</button>";
+        }
+}
+
+window.addEventListener("load", renderQuestion, false);
+</script>
+</head>
+<body>
+<h2 id="test_status"></h2>
+<div id="test"></div>
+</body>
+</html>
