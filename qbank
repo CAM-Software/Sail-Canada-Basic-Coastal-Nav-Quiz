@@ -1,0 +1,186 @@
+// formula questions
+// We create an arrary for formula questions
+// public static String[] fquestion = new String[5];
+var tidequestion = Array();
+var distquest = Array();
+var speequest = Array();
+var convquest = Array();
+var tidequest = Array();
+
+timequest = timeQuestion();
+distquest = distanceQuestion();
+speequest = speedQuestion();
+// convquest = convertQuestion();
+// tidequest = tideQuestion();
+
+var questions = [
+   // (semi) randomly calculated questions
+   [ timequest[0], timequest[1], timequest[2], timequest[3], timequest[4] ],
+   [ distquest[0], distquest[1], distquest[2], distquest[3], distquest[4] ],
+   [ speequest[0], speequest[1], speequest[2], speequest[3], speequest[4] ],
+   // Other chart symbols
+   [ "Which of the following chart symbols indicates an ancorage?", "images/chart-anchorage.jpeg", "images/chart-rock-awash-4.jpeg","images/chart-kelp.jpeg", "images/chart-weed.jpeg", "" ],
+   [ "Which of the following chart symbols indicates a church?", "images/chart-church.jpeg", "images/chart-monument-2.jpeg","images/chart-wind-turbine.jpeg", "images/chart-water-tower-2.jpeg", "" ],
+   [ "Which of the following chart symbols indicates a rock that covers/uncovers with a height of 3?", "images/chart-rock-covers-uncovers-1.jpeg", "images/chart-rock-covers-uncovers-2.jpeg","images/chart-rock-covers-uncovers-3.jpeg", "images/chart-rock-awash-4.jpeg", "" ],
+   [ "Which of the following chart symbols indicates a rock awash at chart datum?", "images/chart-rock-awash-2.jpeg", "images/chart-rock-covers-uncovers-1.jpeg", "images/daymark-out-of-position.jpeg", "images/chart-kelp.jpeg", "" ],
+   [ "Which of the following chart symbols indicates kelp?", "images/chart-kelp.jpeg", "images/chart-rock-covers-uncovers-1.jpeg", "images/chart-anchorage.jpeg", "images/chart-rock-awash-2.jpeg", "" ],
+   [ "Which of the following chart symbols indicates weeds?", "images/chart-weed.jpeg", "images/chart-anchorage.jpeg", "images/daymark-out-of-position.jpeg", "images/chart-rock-awash-2.jpeg", "" ],
+   [ "Which of the following chart symbols indicates a buoy out of position?", "images/buoy-out-of-position-1.jpeg", "images/daymark-out-of-position.jpeg", "images/chart-rock-awash-2.jpeg", "images/chart-rock-covers-uncovers-1.jpeg", "" ],
+   [ "Which of the following chart symbols indicates flood tidal current, rate 2 kts?", "images/tidal-flood-tidal-1.jpeg", "images/tidal-ebb-tidal-1.jpeg", "images/tidal-ebb-tidal-2.jpeg", "images/tidal-current-1.jpeg", "" ],
+   [ "Which of the following chart symbols indicates water tower?", "images/chart-water-tower-1.jpeg", "images/chart-wind-turbine.jpeg","images/chart-monument-1.jpeg", "images/chart-chimney-1.jpeg", "" ],
+   // Formulas
+   [ "What is the formula to calculate speed when you know distance travelled and the time it took?", "S = (60 x D)/T", "S = (60 x T)/D", "S = T/(60 x D)", "S = (60 + D)/T" ],
+   [ "What is the formula to calculate distance travelled when you know the speed and the time it took?", "D = (S x T) / 60", "D = (S x 60) / T", "D = (60 x T) / S", "D = 60 / (S x T)" ],
+   [ "What is the formula to calculate time to cover a distance when you know the speed and distance?", "T = (60 x D) / S", "T = (60 x S) / D", "T = (S x D) / 60", "T = S / (60 x D)" ],
+   [ "What is the formula to convert from a true heading to a magnetic heading?", "T V M D C", "T M V D C", "T V D M C", "T D M V C" ],
+   [ "In converting from a true compass heading to a magnetic compass heading enter the missing values, when T = 000, V = 012W, and C = 017?", "M = 012, D = 5W", "M = 063, D = 3E", "M = 210, D = 6E", "M = 169, D = 6E" ],
+   [ "In converting from a true compass heading to a magnetic compass heading enter the missing values, when T = 000, V = 012W, and C = 017?", "M = 012, D = 5W", "M = 063, D = 3E", "M = 210, D = 6E", "M = 169, D = 6E" ],
+   [ "In converting from a true compass heading to a magnetic compass heading enter the missing values, when T = 000, V = 012W, and C = 017?", "M = 012, D = 5W", "M = 063, D = 3E", "M = 210, D = 6E", "M = 169, D = 6E" ],
+   [ "In converting from a true compass heading to a magnetic compass heading enter the missing values, when T = 000, V = 012W, and C = 017?", "M = 012, D = 5W", "M = 063, D = 3E", "M = 210, D = 6E", "M = 169, D = 6E" ],
+   [ "In converting from a true compass heading to a magnetic compass heading enter the missing values, when T = 000, V = 012W, and C = 017?", "M = 012, D = 5W", "M = 063, D = 3E", "M = 210, D = 6E", "M = 169, D = 6E" ],
+   // Buoy shapes
+   [ "Which of the following is a can buoy?", "images/buoy-anchorage-can.jpeg", "images/buoy-starboard-bifurcation-conical.jpeg", "images/buoy-port-hand-pillar.jpeg", "images/buoy-starboard-hand-spar.jpeg" ],
+   [ "Which of the following is a conical buoy?", "images/buoy-starboard-bifurcation-conical.jpeg", "images/buoy-port-hand-pillar.jpeg", "images/buoy-starboard-hand-spar.jpeg", "images/buoy-fairway-spherical.jpeg" ],
+   [ "Which of the following is a pillar buoy?", "images/buoy-port-hand-pillar.jpeg", "images/buoy-starboard-hand-spar.jpeg", "images/buoy-fairway-spherical.jpeg", "images/buoy-anchorage-can.jpeg" ],
+   [ "Which of the following is a spar buoy?", "images/buoy-starboard-hand-spar.jpeg", "images/buoy-fairway-spherical.jpeg", "images/buoy-anchorage-can.jpeg", "images/buoy-starboard-bifurcation-conical.jpeg" ],
+   [ "Which of the following is a spherical buoy?", "images/buoy-fairway-spherical.jpeg", "images/buoy-anchorage-can.jpeg", "images/buoy-starboard-bifurcation-conical.jpeg", "images/buoy-port-hand-pillar.jpeg" ],
+   // Buoy types
+   [ "Which of the following is an anchorage buoy?", "images/buoy-anchorage-can.jpeg", "images/buoy-starboard-bifurcation-conical.jpeg", "images/buoy-port-hand-pillar.jpeg", "images/buoy-starboard-hand-spar.jpeg" ],
+   [ "Which of the following is a IALA Region B starboard bifurcation buoy?", "images/buoy-starboard-bifurcation-conical.jpeg", "images/buoy-port-bifurcation-can.jpeg", "images/buoy-starboard-hand-spar.jpeg", "images/buoy-fairway-spherical.jpeg" ],
+   [ "Which of the following is a IALA Region B starboard buoy?", "images/buoy-starboard-hand-spar.jpeg", "images/buoy-fairway-spherical.jpeg", "images/buoy-anchorage-can.jpeg", "images/buoy-starboard-bifurcation-conical.jpeg" ],
+   [ "Which of the following is a IALA Region B port bifurcation buoy?", "images/buoy-port-bifurcation-can.jpeg", "images/buoy-port-hand-pillar.jpeg", "images/buoy-starboard-bifurcation-conical.jpeg", "images/buoy-fairway-spherical.jpeg" ],
+   [ "Which of the following is a IALA Region B port buoy?", "images/buoy-port-hand-pillar.jpeg", "images/buoy-starboard-hand-spar.jpeg", "images/buoy-fairway-spherical.jpeg", "images/buoy-anchorage-can.jpeg" ],
+   [ "Which of the following is a fairway buoy?", "images/buoy-fairway-spherical.jpeg", "images/buoy-anchorage-can.jpeg", "images/buoy-starboard-bifurcation-conical.jpeg", "images/buoy-port-hand-pillar.jpeg" ],
+   [ "Which of the following is an isolated danger buoy?", "images/buoy-isolated-danger-pillar.jpeg", "images/buoy-cardinal-mark-north-pillar.jpeg", "images/buoy-starboard-bifurcation-conical.jpeg", "images/buoy-port-hand-pillar.jpeg" ],
+   [ "Which of the following is a cardinal mark buoy?", "images/buoy-cardinal-mark-north-pillar.jpeg", "images/buoy-isolated-danger-pillar.jpeg", "images/buoy-starboard-bifurcation-conical.jpeg", "images/buoy-port-hand-pillar.jpeg" ],
+   [ "Which of the following bouys indicates navigable water is east of the buoy?", "images/buoy-cardinal-mark-east-pillar-plain.jpeg", "images/buoy-cardinal-mark-north-pillar-plain.jpeg","images/buoy-cardinal-mark-south-pillar-plain.jpeg", "images/buoy-cardinal-mark-west-pillar-plain.jpeg", "" ],
+   [ "Which of the following bouys indicates navigable water is north of the buoy?", "images/buoy-cardinal-mark-north-pillar-plain.jpeg", "images/buoy-cardinal-mark-south-pillar-plain.jpeg", "images/buoy-cardinal-mark-west-pillar-plain.jpeg","images/buoy-cardinal-mark-east-pillar-plain.jpeg", "" ],
+   [ "Which of the following bouys indicates navigable water is south of the buoy?",  "images/buoy-cardinal-mark-south-pillar-plain.jpeg", "images/buoy-cardinal-mark-west-pillar-plain.jpeg","images/buoy-cardinal-mark-east-pillar-plain.jpeg", "images/buoy-cardinal-mark-north-pillar-plain.jpeg", "" ],
+   [ "Which of the following bouys indicates navigable water is west of the buoy?", "images/buoy-cardinal-mark-west-pillar-plain.jpeg","images/buoy-cardinal-mark-east-pillar-plain.jpeg", "images/buoy-cardinal-mark-north-pillar-plain.jpeg", "images/buoy-cardinal-mark-south-pillar-plain.jpeg", "" ],
+   [ "Which of the following bouys indicates a danger is west of the buoy?", "images/buoy-cardinal-mark-east-pillar-plain.jpeg", "images/buoy-cardinal-mark-north-pillar-plain.jpeg","images/buoy-cardinal-mark-south-pillar-plain.jpeg", "images/buoy-cardinal-mark-west-pillar-plain.jpeg", "" ],
+   [ "Which of the following bouys indicates a danger is south of the buoy?", "images/buoy-cardinal-mark-north-pillar-plain.jpeg", "images/buoy-cardinal-mark-south-pillar-plain.jpeg", "images/buoy-cardinal-mark-west-pillar-plain.jpeg","images/buoy-cardinal-mark-east-pillar-plain.jpeg", "" ],
+   [ "Which of the following bouys indicates a danger is north of the buoy?",  "images/buoy-cardinal-mark-south-pillar-plain.jpeg", "images/buoy-cardinal-mark-west-pillar-plain.jpeg","images/buoy-cardinal-mark-east-pillar-plain.jpeg", "images/buoy-cardinal-mark-north-pillar-plain.jpeg", "" ],
+   [ "Which of the following bouys indicates a danger is east of the buoy?", "images/buoy-cardinal-mark-west-pillar-plain.jpeg", "images/buoy-cardinal-mark-east-pillar-plain.jpeg", "images/buoy-cardinal-mark-north-pillar-plain.jpeg", "images/buoy-cardinal-mark-south-pillar-plain.jpeg", "" ],
+   // buoy colours
+   [ "In IALA Region A which colour buoys do you keep to starboard when returning to a harbour?", "green", "red", "yellow", "white" ],
+   [ "In IALA Region B which colour buoys do you keep to starboard when returning to a harbour?", "red", "green", "yellow", "white" ],
+   [ "What are the colours of a east cardinal mark buoy?", "black with yellow band", "black over yellow", "yellow over black", "yellow with black band" ],
+   [ "What are the colours of a north cardinal mark buoy?", "black over yellow", "yellow over black", "yellow with black band", "black with yellow band" ],
+   [ "What are the colours of a south cardinal mark buoy?", "yellow over black", "yellow with black band", "black with yellow band", "black over yellow" ],
+   [ "What are the colours of a west cardinal mark buoy?", "yellow with black band", "black with yellow band", "black over yellow", "yellow over black" ],
+   // tide calculations
+   // current calculations
+   // Needs art
+   [ "Which of the following chart symbols indicates light with arc of visibility?", "images/buoy-anchorage.jpeg", "images/buoy-fairway.jpeg", "images/buoy-port-bifurcation.jpeg", "images/buoy-port-hand.jpeg", "" ]
+];
+
+function timeQuestion() {
+   // fquest - function questions
+   var fquest = Array();
+   var i=0, randDist, randSpeed, randTime;
+   randDist = Math.floor(Math.random() * 15 + 2);
+   randSpeed = Math.floor(Math.random() * 4 + 2);
+   randTime = formatMin((60 * randDist ) / randSpeed);
+   fquest[0] = "How long will it take a boat go "+randDist+" nm at "+randSpeed+" kts/hr?";
+   fquest[1] = randTime;
+
+   while ( i == 0 ) {
+      for (var j = 2; j < 5; j++) {
+         fquest[j] = formatMin((60 * (Math.floor(Math.random() * 15 + 2)) ) / ( Math.floor(Math.random() * 4 + 2) ));
+      }
+      if ( fquest[1] != fquest[2] & fquest[1] != fquest[3] & fquest[1] != fquest[4] & fquest[2] != fquest[3] & fquest[2] != fquest[4] & fquest[3] != fquest[4] ) { i = 1; }
+   }
+   return fquest;
+}
+
+function distanceQuestion() {
+   // fquest - function questions
+   var fquest = Array();
+   var i=0, randDist, randSpeed, randTime;
+   randDist = Math.floor(Math.random() * 15 + 2);
+   randSpeed = Math.floor(Math.random() * 4 + 2);
+   randTime = formatMin((60 * randDist ) / randSpeed);
+   fquest[0] = "How far will a boat go in "+randTime+" at "+randSpeed+" kts?"; 
+   fquest[1] = randDist + "nm";
+
+   while (i == 0) {
+      for (var j = 2; j < 5; j++) {
+         fquest[j] = Math.floor(Math.random() * 15 + 2 )+"nm" ;
+      }
+      if ( fquest[1] != fquest[2] & fquest[1] != fquest[3] & fquest[1] != fquest[4] & fquest[2] != fquest[3] & fquest[2] != fquest[4] & fquest[3] != fquest[4] ) { i = 1; }
+   }
+   return fquest;
+}
+
+function speedQuestion() {
+   // fquest - function questions
+   var fquest = Array();
+   var i=0, randDist, randSpeed, randTime;
+   randDist = Math.floor(Math.random() * 15 + 2);
+   randSpeed = Math.floor(Math.random() * 4 + 2);
+   randTime = formatMin((60 * randDist ) / randSpeed);
+   fquest[0] = "How fast is a boat going when it covers "+randDist+"nm in "+randTime+"?";
+   fquest[1] = randSpeed+"kts";
+
+   while ( i == 0 ) {
+      for (var j = 2; j < 5; j++) {
+         fquest[j] = Math.floor(Math.random() * 4 + 2 ) + "kts";
+      }
+      if ( fquest[1] != fquest[2] & fquest[1] != fquest[3] & fquest[1] != fquest[4] & fquest[2] != fquest[3] & fquest[2] != fquest[4] & fquest[3] != fquest[4] ) { i = 1; }
+   }
+   return fquest;
+}
+
+function convertQuestion() {
+   // fquest - function questions
+   var fquest = Array();
+   var i=0, tcompass, variation, mcompass, deviation, ccompass, vardir = "", devdir = "";
+   tcompass = Math.floor(Math.random() * 360);
+   variation = Math.floor(Math.random() * 20 - 10 );
+   if ( variation > 0 ) { vardir = "W" };
+   if ( variation < 0 ) { vardir = "E" };
+   if ( variation == 0 ) { vardir = "" };
+   mmcompass = true + variation;
+   deviation = Math.floor(math.random() * 30 - 15 );
+   if ( deviation > 0 ) { devdir = "W" };
+   if ( deviation < 0 ) { devdir = "E" };
+   if ( deviation == 0 ) { devdir = "" };
+   compass = magnetic + deviation;
+   fquest[0] = "In converting from a true compass heading to a magnetic compass heading enter the missing values, when ";
+   fquest[0] += "T = "+tcompass+", V = "+variation+"W, and C = "+ccompass+"?", "M = 012, D = 5W", "M = 063, D = 3E", "M = 210, D = 6E", "M = 169, D = 6E";
+   fquest[1] = "";
+
+   while ( i == 0 ) {
+      for (var j = 2; j < 5; j++) {
+         fquest[j] = Math.floor(Math.random() * 4 + 2 ) + "kts";
+      }
+      if ( fquest[1] != fquest[2] & fquest[1] != fquest[3] & fquest[1] != fquest[4] & fquest[2] != fquest[3] & fquest[2] != fquest[4] & fquest[3] != fquest[4] ) { i = 1; }
+   }
+   return fquest;
+}
+
+function tideQuestion() {
+   var fquest = Array();
+   var i=0, tcompass, variation, mcompass, deviation, compass;
+
+   return fquest;
+}
+
+function formatMin(minTime) {
+   var formatedTime;
+   formatedTime = "";
+
+   if ( minTime >= 60 & Math.floor((minTime/60)) == 1 ) {
+      formatedTime = Math.floor((minTime/60))+"hr";
+   }
+   if ( minTime >= 60 & Math.floor((minTime/60)) > 1 ) {
+      formatedTime = Math.floor((minTime/60))+"hrs";
+   }
+   if ( minTime > 60 & Math.floor((minTime%60)) > 0 ) {
+      formatedTime = formatedTime + " ";
+   }
+   if ( Math.floor(minTime%60) > 0 ) {
+      formatedTime = formatedTime + Math.floor(minTime%60) + "min";
+   }
+   return formatedTime;
+}
